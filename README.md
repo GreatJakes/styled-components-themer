@@ -1,6 +1,6 @@
-# styled-components-themer - JSON to CSS
+# styled-components-themer - JavaScript Object to CSS
 
-This utility function allows you to quickly write styles in JavaScript object notation (JSON) which are compiled into CSS. It greatly improves on styled-components' theming capabilities by escaping the hassle of template literal syntax. It allows for greater code reuse and modular styling. It also contains a few shortcuts to make your job even easier and is designed to be modified to your specific needs.
+This utility function allows you to quickly write styles in JavaScript object notation which are compiled into CSS. It greatly improves on [styled-components](https://www.styled-components.com/)' theming capabilities by escaping the hassle of template literal syntax. It allows for greater code reuse and modular styling. It also contains a few shortcuts to make your job even easier and is designed to be modified to your specific needs.
 
 Themer essentially outputs a string that contains the style properties to be inserted into a styled-component's string literal.
 
@@ -46,7 +46,7 @@ Finally, pass your style object to the component's theme prop:
 <Div theme={styleObject} {...props} />
 ```
 
-## Writing Styles in JSON
+## Writing Styles in JavaScript
 In the basic usage example, you'll see a plain JavaScript object. The object's properties should be familiar to you, as this is how inline styles are written for standard React components. Themer takes that concept and runs with it.
 
 ### Shortcuts
@@ -218,7 +218,7 @@ With the handy use of the ES6 spread operator, you can set a default style for a
 
 ```jsx
 const ExampleComponent = ({theme}) =>
-    <Div theme={{...defaultStyle, ...theme}} {...props} />
+    <Div theme={{...defaultStyle, ...theme}} />
 ```
 
 You can also do this within the styled-component's declaration if you want to allow theming for a less reusable component:
@@ -240,7 +240,7 @@ const defaultStyle = {
 }
 
 const ExampleComponent = ({theme}) =>
-    <Div theme={{...defaultStyle, ...theme}} {...props}>
+    <Div theme={{...defaultStyle, ...theme}}>
         <Div theme={{...defaultStyle.inner, ...theme.inner}}>Inner Content</Div>
     </Div>
 ```
