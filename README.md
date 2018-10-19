@@ -1,17 +1,17 @@
 # styled-components-themer - JavaScript Object to CSS
 
-This utility function allows you to quickly write styles in JavaScript object notation which are compiled into CSS. It greatly improves on [styled-components](https://www.styled-components.com/)' theming capabilities by escaping the hassle of template literal syntax. It allows for greater code reuse and modular styling. It also contains a few shortcuts to make your job even easier and is designed to be modified to your specific needs.
+This utility function allows you to quickly write styles in JavaScript object notation which are compiled into CSS. It greatly improves on [styled-components](https://www.styled-components.com/)' theming capabilities by escaping the hassle of template literal syntax. It allows for greater code reuse and modular styling. It also contains a few shortcuts to make your job even easier and is designed to be modified to your specific needs. While styled-components does already have some object-to-css support, this utility takes it a lot further.
 
-Themer essentially outputs a string that contains the style properties to be inserted into a styled-component's string literal.
+Themer outputs a string that contains the style properties to be inserted into a styled-component's string literal.
 
-This is not a dependency package. It's just a file with some code.
+This is not a dependency package. It's just a file with some code; its written to be easily modifiable to your purposes.
 
 Note: This was written to work with styled-components, but the output of the function can be compiled into CSS by most pre-processors.
 
 ## Installation
 Simply copy themer.js anywhere into your project and import the themer function where you see fit.
 
-## Basic Usage
+## Usage
 When you create a component with styled-components, call the themer function within the template literal and pass the theme prop to it:
 
 ```jsx
@@ -197,7 +197,7 @@ const exampleStyle = {
 
 Just like with modifier classes above, if you need to define styles for multiple child selectors, make the child property an array.
 
-## Usage Tips
+## Tips & Strategies
 
 ### Extreme Component Reuse
 With themer, you don't need to declare a bunch of different components via styled-components for every unique element in your design. For example, you only need to declare a single styled.div component. From there, just pass the desired (and appropriately-named) style object as the component's theme prop.
@@ -219,6 +219,10 @@ With the handy use of the ES6 spread operator, you can set a default style for a
 ```jsx
 const ExampleComponent = ({theme}) =>
     <Div theme={{...defaultStyle, ...theme}} />
+
+ExampleComponent.defaultProps = {
+    theme: {}
+}
 ```
 
 You can also do this within the styled-component's declaration if you want to allow theming for a less reusable component:
@@ -243,4 +247,14 @@ const ExampleComponent = ({theme}) =>
     <Div theme={{...defaultStyle, ...theme}}>
         <Div theme={{...defaultStyle.inner, ...theme.inner}}>Inner Content</Div>
     </Div>
+
+ExampleComponent.defaultProps = {
+    theme: {
+        inner: {}
+    }
+}
 ```
+
+## Coming Soon
+
+* @font-face and @keyframes support.
