@@ -222,7 +222,21 @@ const exampleStyle = {
     }
 }
 
-// @keyframes example { from: { width: 100px; } to: { width: 0; } }
+// @keyframes example { from { width: 100px; } to { width: 0; } }
+
+const anotherExampleStyle = {
+    keyframes: {
+        ident: 'example',
+        0: {
+            width: 100
+        },
+        100: {
+            width: 0
+        }
+    }
+}
+
+// @keyframes example { 0% { width: 100px; } 100% { width: 0; } }
 ```
 
 ## Tips & Strategies

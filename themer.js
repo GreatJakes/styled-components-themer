@@ -29,13 +29,13 @@ const isCssProperty = prop => cssProperties[prop]
 
 const isCssPseudoClass = prop => cssPseudoClasses[prop]
 
-const isPlaceholder = prop => prop === 'placeholder'
+const isPlaceholder = prop => prop.toLowerCase() === 'placeholder'
 
 const isBreakpoint = prop => media.hasOwnProperty(prop)
 
-const isModifierClass = prop => prop === 'class'
+const isModifierClass = prop => prop.toLowerCase() === 'class'
 
-const isChildSelector = prop => prop === 'child'
+const isChildSelector = prop => prop.toLowerCase() === 'child'
 
 const isKeyFrames = prop => prop.toLowerCase() === 'keyframes'
 
@@ -98,7 +98,7 @@ const handleKeyFrames = style => {
             if (style.hasOwnProperty(i)) {
                 if (isNumeric(i))
                     output += `${i}% {${themer(style[i])}}`
-                else if (i !== 'ident')
+                else if (i.toLowerCase() !== 'ident')
                     output += `${i} {${themer(style[i])}}`
             }
         }
