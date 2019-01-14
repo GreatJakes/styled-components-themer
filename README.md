@@ -1,10 +1,18 @@
 # styled-components-themer - JavaScript Object to CSS
 
-This utility function allows you to quickly write styles in JavaScript object notation which are compiled into CSS. It greatly improves on [styled-components](https://www.styled-components.com/)' theming capabilities by escaping the hassle of template literal syntax. It allows for greater code reuse and modular styling. It also contains a few shortcuts to make your job even easier and is designed to be modified to your specific needs. While styled-components does already have some object-to-css support, this utility takes it a lot further.
+Use this if you:
 
-Themer outputs a string that contains the style properties to be inserted into a styled-component's string literal.
+* use styled-components in your project.
+* hate writing CSS *and* JS inside template literals.
+* have an IDE with code completion features.
+* don't want to declare a new component for every single element that you want to style.
+* have a complex design system that isn't based on scales.
 
-This is not a dependency package. It's just a file with some code; its written to be easily modifiable to your purposes.
+This utility function is a more robust and customizable implementation of React and styled-components' JS-to-CSS methods. It greatly improves on [styled-components](https://www.styled-components.com/)' theming capabilities by escaping the hassle of template literal syntax. It allows for greater code reuse and modular styling. It also contains a few shortcuts to make your job even easier and is designed to be modified to your specific needs.
+
+To be clear: Themer does not do anything that styled-components can't already do. It just makes accomplishing those things a lot faster and with less boilerplate.
+
+This is not a dependency package. It's just a file with some code; its written to be easily modifiable to your purposes. The themer() function outputs a string that contains the style properties to be inserted into a styled-component's string literal.
 
 Note: This was written to work with styled-components, but the output of the function can be compiled into CSS by most pre-processors.
 
@@ -197,6 +205,26 @@ const exampleStyle = {
 
 Just like with modifier classes above, if you need to define styles for multiple child selectors, make the child property an array.
 
+### @keyframes
+
+Declaring keyframes follows the expected syntax. Here, we want to include an "ident" property, for the animation's identifier name.
+
+```js
+const exampleStyle = {
+    keyframes: {
+        ident: 'example',
+        from: {
+            width: 100
+        },
+        to: {
+            width: 0
+        }
+    }
+}
+
+// @keyframes example { from: { width: 100px; } to: { width: 0; } }
+```
+
 ## Tips & Strategies
 
 ### Extreme Component Reuse
@@ -206,10 +234,16 @@ With themer, you don't need to declare a bunch of different components via style
 const Div = styled.div`${props => themer(props.theme)}`
 ```
 
-Now you can just use the Div component anywhere you need a styled div.
+You can just use the Div component anywhere you need a styled div:
 
 ```jsx
 <Div theme={exampleStyle} {...props} />
+```
+
+A Div component can be used for any other tag if you're that hyped about code reuse:
+
+```jsx
+<Div theme={exampleStyle} as="header" {...props} />
 ```
 
 ### Default and Custom Themes
@@ -257,4 +291,4 @@ ExampleComponent.defaultProps = {
 
 ## Coming Soon
 
-* @font-face and @keyframes support.
+* @font-face support.

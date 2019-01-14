@@ -1,4 +1,4 @@
-import {css}                  from 'styled-components/macro'
+import {css} from 'styled-components/macro'
 
 /**
  * Takes a theme object and converts it to CSS that is then applied to styled-components
@@ -12,12 +12,13 @@ export const themer = theme => {
     let style = ''
     for (let prop in theme) {
         if (theme.hasOwnProperty(prop)) {
-            if (isCssProperty(prop)) style += handleCssProperty(theme[prop],prop)
+            if (isCssProperty(prop)) style += handleCssProperty(theme[prop], prop)
             else if (isCssPseudoClass(prop)) style += handleCssPseudoClass(theme[prop], prop)
             else if (isPlaceholder(prop)) style += handlePlaceholder(theme[prop])
-            else if (isBreakpoint(prop)) style += handleBreakpoint(theme[prop],prop)
+            else if (isBreakpoint(prop)) style += handleBreakpoint(theme[prop], prop)
             else if (isModifierClass(prop)) style += handleModifierClass(theme[prop])
             else if (isChildSelector(prop)) style += handleChildSelector(theme[prop])
+            else if (isKeyFrames(prop)) style += handleKeyFrames(theme[prop])
         }
     }
 
@@ -35,6 +36,10 @@ const isBreakpoint = prop => media.hasOwnProperty(prop)
 const isModifierClass = prop => prop === 'class'
 
 const isChildSelector = prop => prop === 'child'
+
+const isKeyFrames = prop => prop.toLowerCase() === 'keyframes'
+
+const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n)
 
 const handleCssProperty = (style, prop) => `${cssProperties[prop]}: ${handleStyle(style, prop)};`
 
@@ -84,6 +89,22 @@ const handleStyle = (style, prop) => {
     if (pixelProperties.includes(cssProperties[prop]) && typeof style === 'number' && style !== 0)
         return `${style}px`
     return style
+}
+
+const handleKeyFrames = style => {
+    if (style.ident) {
+        let output = ''
+        for (let i in style) {
+            if (style.hasOwnProperty(i)) {
+                if (isNumeric(i))
+                    output += `${i}% {${themer(style[i])}}`
+                else if (i !== 'ident')
+                    output += `${i} {${themer(style[i])}}`
+            }
+        }
+
+        return `@keyframes ${style.ident} {${output}`
+    }
 }
 
 const cssProperties = {
