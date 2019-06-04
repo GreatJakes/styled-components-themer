@@ -9,19 +9,21 @@ import {css} from 'styled-components/macro'
  */
 
 export const themer = theme => {
-    let style = ''
+    let style = '',
+        breakpoints = []
     for (let prop in theme) {
         if (theme.hasOwnProperty(prop)) {
             if (isCssProperty(prop)) style += handleCssProperty(theme[prop], prop)
             else if (isCssPseudoClass(prop)) style += handleCssPseudoClass(theme[prop], prop)
             else if (isPlaceholder(prop)) style += handlePlaceholder(theme[prop])
-            else if (isBreakpoint(prop)) style += handleBreakpoint(theme[prop], prop)
             else if (isModifierClass(prop)) style += handleModifierClass(theme[prop])
             else if (isChildSelector(prop)) style += handleChildSelector(theme[prop])
             else if (isKeyFrames(prop)) style += handleKeyFrames(theme[prop])
+            else if (isBreakpoint(prop)) breakpoints[Object.keys(media).indexOf(prop)] = handleBreakpoint(theme[prop], prop)
         }
     }
 
+    style += breakpoints.join('')
     return style
 }
 
