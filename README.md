@@ -205,6 +205,29 @@ const exampleStyle = {
 
 Just like with modifier classes above, if you need to define styles for multiple child selectors, make the child property an array.
 
+### Browser-specific CSS
+You can target specific browsers.
+
+```js
+const exampleStyle = {
+    ie: {              // IE10 & 11
+        color: 'blue'
+    },
+    ff: {              // Firefox
+        color: 'red'
+    },
+    edge: {            // Edge
+        color: 'teal'
+    },
+    ios: {             // Safari on iOS
+        color: 'green'
+    },
+    safari: {          // Safari 9+
+        color: 'brown'
+    }
+}
+```
+
 ### @keyframes
 
 Declaring keyframes follows the expected syntax. Here, we want to include an "ident" property, for the animation's identifier name.

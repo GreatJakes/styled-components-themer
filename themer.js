@@ -10,7 +10,7 @@ import {css} from 'styled-components/macro'
 
 export const themer = theme => {
     let style = '',
-        breakpoints = []
+        mediaQueryCollection = []
     for (let prop in theme) {
         if (theme.hasOwnProperty(prop)) {
             if (isCssProperty(prop)) style += handleCssProperty(theme[prop], prop)
@@ -19,11 +19,11 @@ export const themer = theme => {
             else if (isModifierClass(prop)) style += handleModifierClass(theme[prop])
             else if (isChildSelector(prop)) style += handleChildSelector(theme[prop])
             else if (isKeyFrames(prop)) style += handleKeyFrames(theme[prop])
-            else if (isBreakpoint(prop)) breakpoints[Object.keys(media).indexOf(prop)] = handleBreakpoint(theme[prop], prop)
+            else if (isMediaQuery(prop)) mediaQueryCollection[Object.keys(mediaQueries).indexOf(prop)] = handleMediaQuery(theme[prop], prop)
         }
     }
 
-    style += breakpoints.join('')
+    style += mediaQueryCollection.join('')
     return style
 }
 
@@ -33,7 +33,7 @@ const isCssPseudoClass = prop => cssPseudoClasses[prop]
 
 const isPlaceholder = prop => prop.toLowerCase() === 'placeholder'
 
-const isBreakpoint = prop => media.hasOwnProperty(prop)
+const isMediaQuery = prop => mediaQueries.hasOwnProperty(prop)
 
 const isModifierClass = prop => prop.toLowerCase() === 'class'
 
@@ -57,7 +57,7 @@ const handlePlaceholder = style => {
     return output
 }
 
-const handleBreakpoint = (style, prop) => media[prop]`${themer(style)}`.join('')
+const handleMediaQuery = (style, prop) => mediaQueries[prop]`${themer(style)}`.join('')
 
 const handleModifierClass = style => {
     if (Array.isArray(style)) {
@@ -418,14 +418,19 @@ const breakpointUpperLimit = {
     small: 1630
 }
 
-const mediaQuery = (...query) => (...rules) => css`@media ${css(...query)} { ${css(...rules)} }`
+const mediaQuery = (...query) => (...rules) => css`${!query[0][0].startsWith('@') ? '@media ' : ''}${css(...query)} { ${css(...rules)} }`
 
-const media = {
+const mediaQueries = {
     mobile: mediaQuery`screen and (max-width: ${breakpointUpperLimit.mobile - 1}px)`,
     tablet: mediaQuery`print, screen and (min-width: ${breakpointUpperLimit.mobile}px)`,
     small: mediaQuery`screen and (min-width: ${breakpointUpperLimit.tablet}px)`,
     large: mediaQuery`screen and (min-width: ${breakpointUpperLimit.small}px)`,
-    print: mediaQuery`print`
+    print: mediaQuery`print`,
+    ie: mediaQuery`all and (-ms-high-contrast: none), (-ms-high-contrast: active)`,
+    ff: mediaQuery`@-moz-document url-prefix()`,
+    edge: mediaQuery`@supports (-ms-ime-align:auto)`,
+    ios: mediaQuery`@supports (-webkit-overflow-scrolling: touch)`,
+    safari: mediaQuery`@supports (-webkit-marquee-repetition:infinite and (object-fit:fill)`
 }
 
 /**
