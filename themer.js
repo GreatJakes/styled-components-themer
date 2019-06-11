@@ -59,18 +59,31 @@ const handlePlaceholder = style => {
 
 const handleMediaQuery = (style, prop) => mediaQueries[prop]`${themer(style)}`.join('')
 
+const getSelector = (entry, prefix = '') => {
+    let selectors = []
+    if (Array.isArray(entry)) {
+        for (let i in entry) {
+            selectors.push(`${prefix}${entry[i]}`)
+        }
+
+        return selectors.join(', ')
+    }
+
+    return `${prefix}${entry}`
+}
+
 const handleModifierClass = style => {
     if (Array.isArray(style)) {
         let output = ''
         for (let i in style) {
             if (style.hasOwnProperty(i))
-                output += `&.${style[i].name} {${themer(style[i])}}`
+                output += `${getSelector(style[i].name, '&.')} {${themer(style[i])}}`
         }
 
         return output
     }
 
-    return `&.${style.name} {${themer(style)}}`
+    return `&.${getSelector(style.name, '&.')} {${themer(style)}}`
 }
 
 const handleChildSelector = style => {
@@ -78,13 +91,13 @@ const handleChildSelector = style => {
         let output = ''
         for (let i in style) {
             if (style.hasOwnProperty(i))
-                output += `${style[i].selector} {${themer(style[i])}}`
+                output += `${getSelector(style[i].selector)} {${themer(style[i])}}`
         }
 
         return output
     }
 
-    return `${style.selector} {${themer(style)}}`
+    return `${getSelector(style.selector)} {${themer(style)}}`
 }
 
 const handleStyle = (style, prop) => {

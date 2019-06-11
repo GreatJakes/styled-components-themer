@@ -172,7 +172,7 @@ const exampleStyle = {
 // .component-class.active { background-color: yellow; }
 ```
 
-If you need multiple modifier classes, just make the class property an array of multiple objects.
+If you need multiple modifier classes, just make the class property an array of multiple objects. The name property can also be an array if you want to apply the same styles across multiple modifier classes.
 
 ```js
 const exampleStyle = {
@@ -182,7 +182,7 @@ const exampleStyle = {
             backgroundColor: 'yellow'
         },
         {
-            name: 'inactive',
+            name: ['inactive', 'disabled'],
             backgroundColor: 'gray'
         }
     ]
@@ -200,10 +200,10 @@ const exampleStyle = {
     }
 }
 
-// .component-class > a { color: blue; }
+// .component-class > a { color: blue; } 
 ```
 
-Just like with modifier classes above, if you need to define styles for multiple child selectors, make the child property an array.
+Just like with modifier classes above, if you need to define styles for multiple child selectors, make the child property an array. The selector property can also be an array if you want to apply the same styles across multiple selectors.
 
 ### Browser-specific CSS
 You can target specific browsers.
