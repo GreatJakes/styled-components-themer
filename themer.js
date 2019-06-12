@@ -83,7 +83,7 @@ const handleModifierClass = style => {
         return output
     }
 
-    return `&.${getSelector(style.name, '&.')} {${themer(style)}}`
+    return `${getSelector(style.name, '&.')} {${themer(style)}}`
 }
 
 const handleChildSelector = style => {
