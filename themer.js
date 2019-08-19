@@ -140,7 +140,7 @@ const cssProperties = {
     backgroundPositionX: 'background-position-x',
     backgroundPositionY: 'background-position-y',
     backgroundRepeat: 'background-repeat',
-    backgroundSize: 'backgroundSize',
+    backgroundSize: 'background-size',
     border: 'border',
     borderBottom: 'border-bottom',
     borderBottomColor: 'border-bottom-color',
